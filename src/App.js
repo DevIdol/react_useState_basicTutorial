@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef, useState } from 'react'
+import Items from './components/Items'
+const App = () => {
+  const items = [
+    { id: 1, name: 'iPhone-13', price: 1099 },
+    { id: 2, name: 'Note 21Ultra', price: 1044 },
+  ]
 
-function App() {
+  const [item, setItem] = useState(items)
+
+  const allItems = item.map((i) => (
+    <Items key={i.id} name={i.name} price={i.price} />
+  ))
+
+  const nameRef = useRef()
+  const priceRef = useRef()
+
+  const add = () => {
+    let id = items.length + 1
+    const name = nameRef.current.value
+    const price = priceRef.current.value
+    setItem([...item, { id, name, price }])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>React useState Tutorial</h1>
+      <div>
+        <ul>{allItems}</ul>
+      </div>
+      <div>
+        <input type="text" ref={nameRef} />
+        <br />
+        <br />
+        <input type="text" ref={priceRef} />
+        <br />
+        <br />
+        <button type="submit" onClick={add}>
+          Add
+        </button>
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
